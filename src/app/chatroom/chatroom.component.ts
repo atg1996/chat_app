@@ -67,7 +67,7 @@ export class ChatroomComponent implements OnInit {
     this.sendMessageForm.value.sender = this.sender;
     if (this.sendMessageForm?.valid) {
       this.requests.sendMessage(this.sendMessageForm?.value).subscribe(result => {
-        console.log("log", result);
+        console.log(result);
       });
 
     }
