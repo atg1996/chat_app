@@ -1,0 +1,15 @@
+<div class="main row">
+  <div class="login-text col-12">
+    <h3>register please.</h3>
+  </div>
+  <div class="input-wrapper col-12">
+    <form [formGroup]="forma">
+      <input type="text" formControlName="fullName" required placeholder="your name goes here.">
+      <input type="text" formControlName="username" required placeholder="your username goes here.">
+      <input type="password" formControlName="password" required placeholder="your pass goes here.">
+      <a routerLink="/login">
+        <button type="button" (click)="registerFunction()">done.</button>
+      </a>
+    </form>
+  </div>
+</div>

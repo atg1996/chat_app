@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="main-chatroom row">
+    <div class="chatroom-top col-12">
+      <div class="main row">
+        <div class="left-side col-4">
+          <div class="col-12 ">
+            <ul *ngFor="let user of users" class="list-group">
+              <button class="chats" (click)="loadMessages(user.id)">{{user.name}}</button>
+            </ul>
+          </div>
+        </div>
+        <div class="right-side col-8">
+          <div class="right-top col-12">
+            <h5 class="sender-name">{{ currentUser.name }}</h5>
+          </div>
+          <div class="messaging-space row"></div>
+          <ng-container *ngFor="let message of messages">
+            <div class="col-6" [ngClass]="message.self?'my-side': 'sender-side'">
+              <div class="col-12" [ngClass]="message.self?'sent-message': 'accepted-message'">
+                <span>{{ message.message }}</span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="send-message col-12">
+          <form [formGroup]="sendMessageForm">
+            <div class="message-input-div col-10">
+              <input type="text"  formControlName="sentMessage" class="message-input" placeholder="Aa">
+            </div>
+            <div class="send-button-div col-2">
+              <button type="button" class="send-button"  (click)="messageSent(receiver)">send.</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

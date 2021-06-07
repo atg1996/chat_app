@@ -1,0 +1,36 @@
+.main {
+  box-sizing: border-box;
+  border-radius: 5px;
+  height: 30px;
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+  border-bottom: black;
+  text-align: center;
+}
+
+.title-wrapper {
+  color: black;
+  text-align: center ;
+  line-height: 50%;
+  font-size: 30px;
+  margin: 0 auto;
+  border-bottom:solid lightgrey 1px;
+  border-width: 1px;
+  border-style: none none solid;
+  padding-bottom: 5px;
+  width: 100%;
+}
+.title {
+  font-family: Arial;
+  color: black;
+  text-align: center ;
+  font-size: 30px;
+}
+
+.motto {
+  text-align: center;
+  font-family: Arial;
+  line-height:10%;
+  color: #AEAEAE;
+}
