@@ -37,7 +37,7 @@ export class ChatroomComponent implements OnInit {
     this.logReceived = [];
     this.users = [];
     this.receiver = 0;
-    this.sender = 0;
+    this.sender = localStorage.getItem('currentUser');
 
     this.currentUser = [];
     this.messages = [];
@@ -66,8 +66,9 @@ export class ChatroomComponent implements OnInit {
   }
 
   messageSent(receiver: number, sender: number) {
+    const senderId = localStorage.getItem('user_id');
     this.sendMessageForm.value.receiver = this.receiver; // send receiver id with request
-    this.sendMessageForm.value.sender = this.sender;  // send sender id with request
+    //console.log(this.sender);  // send sender id with request
     if (this.sendMessageForm?.valid) {
       this.requests.sendMessage(this.sendMessageForm?.value).subscribe(result => {
         console.log(result);
