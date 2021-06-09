@@ -28,7 +28,7 @@
               <input type="text"  formControlName="sentMessage" class="message-input" placeholder="Aa">
             </div>
             <div class="send-button-div col-2">
-              <button type="button" class="send-button"  (click)="messageSent(receiver)">send.</button>
+              <button type="button" class="send-button" [disabled]="sendMessageForm.invalid"  (click)="messageSent(receiver , sender)">send.</button>
             </div>
           </form>
         </div>

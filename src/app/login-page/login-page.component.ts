@@ -34,7 +34,6 @@ export class LoginPageComponent implements OnInit {
   loginSent(): void {
         if (this.loginInfo?.valid) {
           this.requests.loginService(this.loginInfo?.value).subscribe(result => {
-            console.log("A", result);
             this.chatNames.setUsers(result.usernames);
           });
 

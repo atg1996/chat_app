@@ -21,7 +21,7 @@ export class ChatroomComponent implements OnInit {
   logReceived: any[];
   users: any;
   receiver: number;
-  sender: number;
+  sender: any;
 
   currentUser: any;
   messages: any[];
@@ -56,15 +56,16 @@ export class ChatroomComponent implements OnInit {
     this.receiver = userId;
 
 
+
     //this.currentUser = this.users.filter((user: any) => user.id === userId).pop();
      //this.users = this.chatNames.getUsers();
      //this.messages = this.chatNames.getUserMessages(userId);
      //console.log("asdasd", this.currentUser);
   }
 
-  messageSent(receiver: number) {
+  messageSent(receiver: number, sender: number) {
     this.sendMessageForm.value.receiver = this.receiver; // send receiver id with request
-    this.sendMessageForm.value.sender = this.sender;
+    this.sendMessageForm.value.sender = this.sender;  // send sender id with request
     if (this.sendMessageForm?.valid) {
       this.requests.sendMessage(this.sendMessageForm?.value).subscribe(result => {
         console.log(result);

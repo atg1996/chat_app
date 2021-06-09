@@ -14,6 +14,8 @@ export class ChatNamesService {
   public users: any = [];
   private usersB = new BehaviorSubject(this.users);
   sharedUsers = this.usersB.asObservable();
+  public myInfo: any = [];
+  private myInfoB = new BehaviorSubject(this.myInfo);
 
   constructor() {
   }
@@ -22,6 +24,12 @@ export class ChatNamesService {
     this.usersB.next(users);
     console.log("setUsers", this.usersB);
   }
+
+
+ /* thisUser(myInfo: any  ) {
+    this.myInfoB.next(myInfo);
+    console.log("myinfo", this.myInfoB);
+  }*/
 
   getUsers(): any[] {
     console.log(this.users);

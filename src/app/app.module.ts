@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 /*import {TokenInterceptorService} from './_helpers/token-interceptor.service';*/
 import { HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ChatNamesService} from './chat-names.service';
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { LoginGuard } from './_guards/login.guard';
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import {ChatNamesService} from './chat-names.service';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    StorageServiceModule,
   ],
   providers: [
     ChatNamesService

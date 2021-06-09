@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable, pipe} from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { User } from './_models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +15,16 @@ export class RequestsService {
   private static readonly URL_MESSAGE = 'http://localhost:8000/message';
   private static readonly URL_CHAT = 'http://localhost:8000/chatroom';
 
-/*  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;*/
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
-   /* this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser') as string));
-    this.currentUser = this.currentUserSubject.asObservable();*/
+  constructor(private http: HttpClient, private router: Router) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser') as string));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
-  /*public get currentUserValue(): User {
+  public get currentUserValue(): User {
     return this.currentUserSubject.value;
-  }*/
+  }
 
   sendMessage(data: any): Observable<any> {
     return this.http.post<any>(RequestsService.URL_MESSAGE, data);
@@ -40,15 +39,13 @@ export class RequestsService {
   }
 
   loginService(loginData: any): Observable<any> {
-    let resp = this.http.post<any>(RequestsService.URL_LOGIN, loginData);
-    return resp;
-      /*.pipe(map(user => {
-        if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-        return user;
-      }));*/
+    const resp = this.http.post<any>(RequestsService.URL_LOGIN, loginData);
+    return resp
+      .pipe(map(currentUser => {
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          this.currentUserSubject.next(currentUser);
+          return currentUser;
+      }));
   }
 
   getDataService(token: any): Observable<any> {
