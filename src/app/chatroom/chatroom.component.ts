@@ -24,6 +24,7 @@ export class ChatroomComponent implements OnInit {
   sender: any;
 
   currentUser: any;
+  currentUserSubject: any;
   messages: any[];
   myMessage = new FormControl('');
 
@@ -40,6 +41,7 @@ export class ChatroomComponent implements OnInit {
 
     this.currentUser = [];
     this.messages = [];
+    this.currentUserSubject = this.requests.currentUserSubject;
   }
 
   ngOnInit() {
@@ -73,6 +75,14 @@ export class ChatroomComponent implements OnInit {
 
     }
   }
+
+  logout() {
+    console.log("davay aper jan");
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
+
+
 
   /*messageSent() {
     this.nameService.sendMessage(this.currentUser.id, this.myMessage.value);

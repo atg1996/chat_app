@@ -180,6 +180,27 @@ h3 {
 
 }
 
-.messaging-space {
-  max-height: 600px;
+.logout {
+  box-sizing: border-box;
+  text-align: right;
+  padding: 0;
 }
+
+.logout_button {
+  margin: 5px;
+  border:gray 1px solid;
+  font-family: Arial;
+  width: 15%;
+  height: 20px;
+  border-radius: 5px;
+  font-size: 12px;
+  top: 50%;
+  align-items: center;
+  justify-content: center;
+  color: grey;
+}
+
+.logout_button:focus {
+  background-color:#cae2e5 ;
+}
+

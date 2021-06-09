@@ -15,8 +15,9 @@ export class RequestsService {
   private static readonly URL_MESSAGE = 'http://localhost:8000/message';
   private static readonly URL_CHAT = 'http://localhost:8000/chatroom';
 
-  private currentUserSubject: BehaviorSubject<User>;
+  public currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+
 
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser') as string));
