@@ -34,8 +34,7 @@ import { LoginGuard } from './_guards/login.guard';
     StorageServiceModule,
   ],
   providers: [
-    ChatNamesService
-    /*{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },*/],
+    ChatNamesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

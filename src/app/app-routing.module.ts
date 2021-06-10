@@ -4,7 +4,6 @@ import { ChatroomComponent } from './chatroom/chatroom.component';
 import { LoginPageComponent} from './login-page/login-page.component';
 import {RegisterPageComponent} from './register-page/register-page.component';
 import {LoginGuard} from './_guards/login.guard';
-/*import {AuthGuard} from './_guards/auth-guard.service';*/
 
 const routes: Routes = [
   {path: 'login', component: LoginPageComponent},
