@@ -78,7 +78,6 @@ export class ChatroomComponent implements OnInit {
   }
 
   logout() {
-    console.log("davay aper jan");
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
