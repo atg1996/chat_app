@@ -22,6 +22,7 @@ export class ChatroomComponent implements OnInit {
   users: any;
   receiver: number;
   sender: any;
+  senders: any;
 
   currentUser: any;
   currentUserSubject: any;
@@ -37,7 +38,8 @@ export class ChatroomComponent implements OnInit {
     this.logReceived = [];
     this.users = [];
     this.receiver = 0;
-    this.sender = localStorage.getItem('currentUser');
+    this.sender = 0;
+    this.senders = [];
 
     this.currentUser = [];
     this.messages = [];
@@ -46,11 +48,11 @@ export class ChatroomComponent implements OnInit {
 
   ngOnInit() {
     this.chatNames.sharedUsers.subscribe(users => (this.users = users));
+    this.chatNames.sharedMyInfo.subscribe(myInfo => (this.sender = myInfo));
     this.getNameFromServiceNames();
   }
 
   getNameFromServiceNames(): void {
-    //console.log("chatRoomComponent", this.users);
   }
 
   loadMessages(userId: number): void {
@@ -64,12 +66,13 @@ export class ChatroomComponent implements OnInit {
      //console.log("asdasd", this.currentUser);
   }
 
-  messageSent(receiver: number, sender: number) {
-    let senderId: any = localStorage.getItem('user_id');
+  messageSent() {
     this.sendMessageForm.value.receiver = this.receiver; // send receiver id with request
-    this.sendMessageForm.value.sender = senderId; // send sender id with request
+    this.sendMessageForm.value.sender = this.sender; // send sender id with request
     if (this.sendMessageForm?.valid) {
       this.requests.sendMessage(this.sendMessageForm?.value).subscribe(result => {
+        console.log(result);
+        
       });
 
     }

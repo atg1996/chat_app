@@ -16,6 +16,8 @@ export class ChatNamesService {
   sharedUsers = this.usersB.asObservable();
   public myInfo: any = [];
   private myInfoB = new BehaviorSubject(this.myInfo);
+  sharedMyInfo = this.myInfoB.asObservable();
+
 
   constructor() {
   }
@@ -25,11 +27,10 @@ export class ChatNamesService {
     console.log("setUsers", this.usersB);
   }
 
-
- /* thisUser(myInfo: any  ) {
+  userInfo(myInfo: number): void {
     this.myInfoB.next(myInfo);
-    console.log("myinfo", this.myInfoB);
-  }*/
+    console.log('this is my info', myInfo);
+  }
 
   getUsers(): any[] {
     console.log(this.users);
@@ -42,47 +43,11 @@ export class ChatNamesService {
 
     return user ? user.messages : [];
   }
-  //
-  // sendMessage(userId: number, message: string): void {
-  //   const user = this.getUsers().filter(u => u.id === userId).pop();
-  //   if (user) {
-  //     console.log(user);
-  //     user.messages.push({id: 150, message: message, self: true});
-  //   }
-  // }
 }
 
-// any[] = [
-// {
-//   id: 1, name: 'Adam Sandler', messages: [
-//     {id: 1, message: 'Hi what are you doing???', self: true},
-//     {id: 2, message: 'Hasta la vista babe', self: false},
-//     {id: 3, message: 'Hi what are you doing???', self: true},
-//   ]
-// },
-// {id: 2, name: 'Arnold Schwarzenegger', messages: []},
-// {
-//   id: 3, name: 'Anna Frank', messages: [
-//     {id: 7, message: 'Hasta la vista babe', self: false},
-//     {id: 8, message: 'Hi what are you doing???', self: true},
-//     {id: 9, message: 'Hasta la vista babe', self: false},
-//     {id: 10, message: 'Hi what are you doing???', self: true},
-//     {id: 11, message: 'Hasta la vista babe', self: false},
-//     {id: 12, message: 'Hasta la vista babe', self: false},
-//   ]
-// },
-// {id: 4, name: 'John Johnson', messages: []},
-// {id: 5, name: 'Hovo', messages: []},
 
 
 
 
 
-/*public usr = [
-{
-id: 1, name: 'Adam Sandler', messages: [
-  {id: 1, message: 'Hi what are you doing???', self: true},
-  {id: 2, message: 'Hasta la vista babe', self: false},
-  {id: 3, message: 'Hi what are you doing???', self: true},
-]
-}];*/
+
