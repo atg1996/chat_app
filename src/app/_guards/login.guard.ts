@@ -4,12 +4,10 @@ import { Observable } from 'rxjs';
 import { RequestsService } from '../requests.service';
 import { ChatNamesService } from '../chat-names.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
-
 
   constructor( private routes: Router,
                private requestsService: RequestsService,
@@ -20,6 +18,9 @@ export class LoginGuard implements CanActivate {
     const token = localStorage.getItem('currentUser');
     if (token) {
       return true;
+      /**
+       * @todo remove alert. use popup instead
+       */
       alert('you are logged in!');
     }
     else {

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from "@angular/common";
-
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -10,12 +9,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
-/*import {TokenInterceptorService} from './_helpers/token-interceptor.service';*/
-import { HTTP_INTERCEPTORS} from '@angular/common/http';
-import {ChatNamesService} from './chat-names.service';
+import { ChatNamesService } from './chat-names.service';
 import { StorageServiceModule } from 'ngx-webstorage-service';
-import { LoginGuard } from './_guards/login.guard';
-
 
 @NgModule({
   declarations: [

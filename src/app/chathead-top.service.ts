@@ -6,7 +6,10 @@ import {ChatNamesService } from './chat-names.service';
 })
 export class ChatheadTopService {
 
-  constructor(private chatNames: ChatNamesService) { }
+  constructor(private chatNames: ChatNamesService) {
+
+  }
+
   getName() {
     const field = this.chatNames.getNames();
   }

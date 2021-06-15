@@ -6,14 +6,12 @@ h3 {
 
 .chatroom-top {
   box-sizing: border-box;
-  margin-top: 100px;
   text-align: center;
   justify-content:center;
   width:100%;
   padding: 10px;
-  margin:150px auto auto ;
+  margin: 150px auto auto ;
 }
-
 
 .main {
   box-sizing: border-box;
@@ -26,7 +24,7 @@ h3 {
   padding: 0;
   border: solid #868d8a;
   border-width: 1px;
-  overflow-y:auto ;
+  overflow-y: auto;
 }
 
 .right-side {
@@ -69,8 +67,8 @@ h3 {
   height: 20px;
   width: 97%;
   border: none;
+  /*check*/
   border-width: 1px;
-  border-radius: 5px;
   font-size: 12px;
   background-color: #c0cac6;
   padding-left: 10px;
@@ -88,12 +86,13 @@ h3 {
   text-align: center;
   justify-content: left;
   align-items: center;
-  width: 80;
+  width: 80px;
 }
 
 .send-button {
   margin: 5px;
   border:gray 1px solid;
+  /*check*/
   font-family: Arial;
   min-width: 80%;
   height: 20px;
@@ -104,30 +103,26 @@ h3 {
   align-items: center;
   justify-content: center;
   color: grey;
-
-
 }
 
-
 .send-button:disabled {
-  background-color:#E2EBEB ;
+  background-color: #E2EBEB ;
   border: none;
 }
 
 .send-button:focus {
-  background-color:#cae2e5 ;
+  background-color: #cae2e5 ;
 }
-
 
 .send-button-div {
   float: left;
   display: inline-flex;
   justify-content: center;
 }
+
 .sender-name {
   color: grey;
   font-family: Arial;
-
 }
 
 .chats {
@@ -153,31 +148,26 @@ h3 {
   color: grey;
 }
 
-
 .sent-message {
-  background-color:  #f59999;
+  background-color: #f59999;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 1px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 5px 30px;
+  /*check*/
   margin-left:95%;
   margin-top: 15px;
   margin-bottom: 15px;
-
 }
 
 .accepted-message {
-  background-color:#cae2e5;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 1px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  background-color: #cae2e5;
+  border-radius: 10px 10px 10px 1px;
   padding: 5px 30px;
   margin-left: 5%;
   margin-top: 15px;
   margin-bottom: 15px;
-
 }
 
 .logout {

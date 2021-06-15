@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="main-chatroom row">
     <div class="logout col-12">
       <a routerLink="/login"><button type="button" class="logout_button" (click)="logout()">logout</button></a>
@@ -19,8 +18,8 @@
           </div>
           <div class="messaging-space row"></div>
           <ng-container *ngFor="let message of messages">
-            <div class="col-6" [ngClass]="message.self?'my-side': 'sender-side'">
-              <div class="col-12" [ngClass]="message.self?'sent-message': 'accepted-message'">
+            <div class="col-6" [ngClass]="message.sender_id == sender?'my-side': 'sender-side'">
+              <div class="col-12" [ngClass]="message.sender_id == sender?'sent-message': 'accepted-message'">
                 <span>{{ message.message }}</span>
               </div>
             </div>
@@ -36,7 +35,6 @@
             </div>
           </form>
         </div>
-
       </div>
     </div>
   </div>

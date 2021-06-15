@@ -23,7 +23,7 @@ export class RegisterPageComponent implements OnInit {
   registerFunction(): any {
     if (this.forma?.valid) {
       this.requests.sendRegisterInfo(this.forma?.value).subscribe(result => {
-        console.log(result); });
+      });
     } else {
       alert('Please fill all fields ');
     }

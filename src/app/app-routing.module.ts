@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChatroomComponent } from './chatroom/chatroom.component';
 import { LoginPageComponent} from './login-page/login-page.component';
-import {RegisterPageComponent} from './register-page/register-page.component';
-import {LoginGuard} from './_guards/login.guard';
+import { RegisterPageComponent } from './register-page/register-page.component';
+import { LoginGuard } from './_guards/login.guard';
 
 const routes: Routes = [
-  {path: 'login', component: LoginPageComponent},
-  {path: 'chatroom', component: ChatroomComponent, canActivate: [LoginGuard]},
-  {path: 'register', component: RegisterPageComponent },
+  { path: 'login', component: LoginPageComponent },
+  { path: 'chatroom', component: ChatroomComponent, canActivate: [LoginGuard] },
+  { path: 'register', component: RegisterPageComponent },
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
 ];
 
