@@ -86,7 +86,6 @@ h3 {
   text-align: center;
   justify-content: left;
   align-items: center;
-  width: 80px;
 }
 
 .send-button {
@@ -133,7 +132,6 @@ h3 {
   border-bottom:1px grey solid;
   display: flex;
   justify-content: center;
-  line-height: 40px;
   align-content: center;
   flex-direction: column;
   text-align: center;

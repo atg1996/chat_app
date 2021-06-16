@@ -23,6 +23,7 @@ export class LoginPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
+              private router: Router,
               private requests: RequestsService,
               private chatNames: ChatNamesService) {
     this.users = '';
@@ -33,11 +34,13 @@ export class LoginPageComponent implements OnInit {
 
   loginSent(): void {
         if (this.loginInfo?.valid) {
-          this.requests.loginService(this.loginInfo?.value).subscribe(result => {
-            this.chatNames.setUsers(result.usernames);
-            this.chatNames.userInfo(result.user_id);
+          this.requests.loginService(this.loginInfo?.value).subscribe((result) => {
+            if (result.success) {
+              this.chatNames.setUsers(result.usernames);
+              this.chatNames.userInfo(result.user_id);
+            }
+            this.router.navigateByUrl('chatroom');
           });
-
         }
   }
 }

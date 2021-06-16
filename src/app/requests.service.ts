@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, pipe} from 'rxjs';
-import { map } from 'rxjs/operators';
-import { User } from './_models/user';
-import { Router } from '@angular/router';
+import {BehaviorSubject, Observable, of, pipe} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {User} from './_models/user';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -46,11 +46,14 @@ export class RequestsService {
   loginService(loginData: any): Observable<any> {
     const resp = this.http.post<any>(RequestsService.URL_LOGIN, loginData);
     return resp
-      .pipe(map(currentUser => {
+      .pipe(
+        map(currentUser => {
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
           this.currentUserSubject.next(currentUser);
           return currentUser;
-      }));
+        }),
+        catchError(err => of(err.error.message))
+      );
   }
 
   getDataService(token: any): Observable<any> {

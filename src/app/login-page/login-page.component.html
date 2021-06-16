@@ -6,7 +6,7 @@
     <form [formGroup]="loginInfo">
       <input type="text" formControlName="username" required placeholder="your username goes here.">
       <input class="surname" type="password" formControlName="password" required placeholder="your password goes here.">
-      <a routerLink="/chatroom"><button type="button" id="loginButton" [disabled]="loginInfo.invalid" (click)="loginSent()">login.</button></a>
+      <a><button type="button" id="loginButton" [disabled]="loginInfo.invalid" (click)="loginSent()">login.</button></a>
     </form>
       <a routerLink="/register"><button type="button">sign up.</button></a>
 

@@ -63,6 +63,9 @@ export class ChatroomComponent implements OnInit {
 
   loadMessages(userId: number): void {
     this.receiver = userId;
+    this.messages = [];
+    this.requests.getMessage(this.sender, this.receiver)
+      .subscribe(res => this.messages = res);
   }
 
   messageSent() {
@@ -70,6 +73,9 @@ export class ChatroomComponent implements OnInit {
     this.sendMessageForm.value.sender = this.sender; // send sender id with request
     if (this.sendMessageForm?.valid) {
       this.requests.sendMessage(this.sendMessageForm?.value).subscribe(result => {
+        this.requests.getMessage(this.sender, this.receiver)
+          .subscribe(res => this.messages = res);
+
       });
 
     }
