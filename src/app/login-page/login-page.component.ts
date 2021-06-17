@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {FormControl } from '@angular/forms';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { RequestsService } from '../requests.service';
-import { ChatNamesService } from '../chat-names.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import {FormBuilder, Validators} from '@angular/forms';
+import { RequestsService } from '../services/requests.service';
+import { ChatNamesService } from '../services/chat-names.service';
 
 @Component({
   selector: 'app-login-page',
@@ -21,11 +19,13 @@ export class LoginPageComponent implements OnInit {
     }
   );
 
-  constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private router: Router,
-              private requests: RequestsService,
-              private chatNames: ChatNamesService) {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private requests: RequestsService,
+    private chatNames: ChatNamesService
+  ) {
     this.users = '';
   }
 
@@ -35,6 +35,7 @@ export class LoginPageComponent implements OnInit {
   loginSent(): void {
         if (this.loginInfo?.valid) {
           this.requests.loginService(this.loginInfo?.value).subscribe((result) => {
+            // TODO: navigate while success and show error message if success is false
             if (result.success) {
               this.chatNames.setUsers(result.usernames);
               this.chatNames.userInfo(result.user_id);

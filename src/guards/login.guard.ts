@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { RequestsService } from '../requests.service';
-import { ChatNamesService } from '../chat-names.service';
+import { RequestsService } from '../app/services/requests.service';
+import { ChatNamesService } from '../app/services/chat-names.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,6 @@ export class LoginGuard implements CanActivate {
     const token = localStorage.getItem('currentUser');
     if (token) {
       return true;
-      /**
-       * @todo remove alert. use popup instead
-       */
       alert('you are logged in!');
     }
     else {

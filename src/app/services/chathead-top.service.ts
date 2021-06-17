@@ -10,8 +10,8 @@ export class ChatheadTopService {
 
   }
 
-  getName() {
+/*  getName() {
     const field = this.chatNames.getNames();
-  }
+  }*/
 
 }

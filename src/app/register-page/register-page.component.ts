@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { RequestsService } from '../requests.service';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {RequestsService} from '../services/requests.service';
+import {Router, ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -8,25 +9,27 @@ import { RequestsService } from '../requests.service';
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.css']
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent {
   forma = this.formBuilder.group({
     fullName: ['', Validators.required],
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
-  constructor(private requests: RequestsService, private formBuilder: FormBuilder) {
+
+  constructor(
+    private requests: RequestsService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+  ) {
   }
 
-  ngOnInit(): void {
-  }
-
-  registerFunction(): any {
+  registerFunction(): void {
     if (this.forma?.valid) {
-      this.requests.sendRegisterInfo(this.forma?.value).subscribe(result => {
-      });
+      this.requests.sendRegisterInfo(this.forma?.value);
     } else {
       alert('Please fill all fields ');
     }
+    this.router.navigateByUrl('/login');
   }
 
 }

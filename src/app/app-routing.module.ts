@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChatroomComponent } from './chatroom/chatroom.component';
 import { LoginPageComponent} from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
-import { LoginGuard } from './_guards/login.guard';
+import { LoginGuard } from '../guards/login.guard';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },

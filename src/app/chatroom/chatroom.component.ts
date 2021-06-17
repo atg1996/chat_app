@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ChatNamesService} from '../chat-names.service';
+import {ChatNamesService} from '../services/chat-names.service';
 import {FormControl} from '@angular/forms';
 import {FormBuilder, Validators} from '@angular/forms';
-import {RequestsService} from '../requests.service';
+import {RequestsService} from '../services/requests.service';
 import {interval} from 'rxjs/internal/observable/interval';
 import {startWith, switchMap} from 'rxjs/operators';
 
@@ -17,13 +17,11 @@ export class ChatroomComponent implements OnInit {
   sendMessageForm = this.formBuilder.group({
     sentMessage: ['', Validators.required],
     receiver: [0, Validators.required],
-    }
-  );
+  });
 
-  logReceived: any[];
-  users: any;
+  users: any[];
   receiver: number;
-  sender: any;
+  sender: number;
   senders: any;
   timeInterval: any;
 
@@ -32,13 +30,15 @@ export class ChatroomComponent implements OnInit {
   messages: any[];
   myMessage = new FormControl('');
 
+  @ViewChild('inputElement') inputElement: ElementRef | undefined;
+
   constructor(
     private route: ActivatedRoute,
     private chatNames: ChatNamesService,
     private requests: RequestsService,
     private formBuilder: FormBuilder,
   ) {
-    this.logReceived = [];
+    // TODO: cleanup
     this.users = [];
     this.receiver = 0;
     this.sender = 0;
@@ -47,11 +47,12 @@ export class ChatroomComponent implements OnInit {
     this.currentUser = [];
     this.messages = [];
     this.currentUserSubject = this.requests.currentUserSubject;
+
   }
 
-  ngOnInit() {
-    this.chatNames.sharedUsers.subscribe(users => (this.users = users));
-    this.chatNames.sharedMyInfo.subscribe(myInfo => (this.sender = myInfo));
+  ngOnInit(): void {
+    this.chatNames.sharedUsers.subscribe(users => this.users = users);
+    this.chatNames.sharedMyInfo.subscribe(myInfo => this.sender = myInfo);
     this.timeInterval = interval(3000)
       .pipe(
         startWith(0),
@@ -68,7 +69,7 @@ export class ChatroomComponent implements OnInit {
       .subscribe(res => this.messages = res);
   }
 
-  messageSent() {
+  messageSent(): void {
     this.sendMessageForm.value.receiver = this.receiver; // send receiver id with request
     this.sendMessageForm.value.sender = this.sender; // send sender id with request
     if (this.sendMessageForm?.valid) {
@@ -81,9 +82,16 @@ export class ChatroomComponent implements OnInit {
     }
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.timeInterval.unsubscribe();
   }
+
+  resetValue(): void {
+    if (this.inputElement) {
+      this.inputElement.nativeElement.value = '';
+    }
+  }
 }
+

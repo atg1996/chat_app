@@ -1,14 +1,27 @@
 <div class="main row">
+
   <div class="login-text col-12">
     <h3>login or sign up.</h3>
   </div>
+
+
   <div class="input-wrapper col-12">
+
     <form [formGroup]="loginInfo">
+
       <input type="text" formControlName="username" required placeholder="your username goes here.">
+
       <input class="surname" type="password" formControlName="password" required placeholder="your password goes here.">
-      <a><button type="button" id="loginButton" [disabled]="loginInfo.invalid" (click)="loginSent()">login.</button></a>
+
+      <a>
+        <button type="button" id="loginButton" [disabled]="loginInfo.invalid" (click)="loginSent()">login.</button>
+      </a>
+
     </form>
-      <a routerLink="/register"><button type="button">sign up.</button></a>
+
+    <a routerLink="/register">
+      <button type="button">sign up.</button>
+    </a>
 
   </div>
 </div>

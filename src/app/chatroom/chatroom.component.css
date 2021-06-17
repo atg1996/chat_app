@@ -1,5 +1,8 @@
+* {
+  font-family: Arial, sans-serif;
+}
+
 h3 {
-  font-family: Arial;
   text-align: center;
   margin: 25px;
 }
@@ -67,8 +70,6 @@ h3 {
   height: 20px;
   width: 97%;
   border: none;
-  /*check*/
-  border-width: 1px;
   font-size: 12px;
   background-color: #c0cac6;
   padding-left: 10px;
@@ -91,8 +92,6 @@ h3 {
 .send-button {
   margin: 5px;
   border:gray 1px solid;
-  /*check*/
-  font-family: Arial;
   min-width: 80%;
   height: 20px;
   border-radius: 5px;
@@ -121,7 +120,6 @@ h3 {
 
 .sender-name {
   color: grey;
-  font-family: Arial;
 }
 
 .chats {
@@ -142,7 +140,6 @@ h3 {
 }
 
 .chats-name {
-  font-family: Arial;
   color: grey;
 }
 
@@ -153,8 +150,6 @@ h3 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 5px 30px;
-  /*check*/
-  margin-left:95%;
   margin-top: 15px;
   margin-bottom: 15px;
 }
@@ -177,7 +172,6 @@ h3 {
 .logout_button {
   margin: 5px;
   border:gray 1px solid;
-  font-family: Arial;
   width: 15%;
   height: 20px;
   border-radius: 5px;

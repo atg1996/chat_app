@@ -6,11 +6,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ChatNamesService {
 
-  public users: any = [];
+  public users: any = JSON.parse(localStorage.getItem('currentUser') || '{}').usernames || [];
   private usersB = new BehaviorSubject(this.users);
   sharedUsers = this.usersB.asObservable();
-  public myInfo: any = [];
-  private myInfoB = new BehaviorSubject(this.myInfo);
+  public myInfo: number = JSON.parse(localStorage.getItem('currentUser') || '{}').user_id;
+  private myInfoB = new BehaviorSubject<number>(this.myInfo);
   sharedMyInfo = this.myInfoB.asObservable();
 
   constructor() {

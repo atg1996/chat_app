@@ -2,30 +2,33 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, pipe} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {User} from './_models/user';
 import {Router} from '@angular/router';
+import {IUser} from '../../models/user.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestsService {
-  private static readonly BASE_URL = 'http://192.168.1.22:8000';
-  private static readonly URL_REGISTER = RequestsService.BASE_URL + '/register';
-  private static readonly URL_LOGIN = RequestsService.BASE_URL + '/login';
-  private static readonly URL_PROFILE = RequestsService.BASE_URL + '/profile';
-  private static readonly URL_MESSAGE = RequestsService.BASE_URL + '/message';
-  private static readonly URL_MESSAGES = RequestsService.BASE_URL + '/messages';
-  private static readonly URL_CHAT = RequestsService.BASE_URL + '/chatroom';
+  private static readonly URL_REGISTER = environment.main_url + '/register';
+  private static readonly URL_LOGIN = environment.main_url + '/login';
+  private static readonly URL_PROFILE = environment.main_url + '/profile';
+  private static readonly URL_MESSAGE = environment.main_url + '/message';
+  private static readonly URL_MESSAGES = environment.main_url + '/messages';
+  private static readonly URL_CHAT = environment.main_url + '/chatroom';
 
-  public currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  public currentUserSubject: BehaviorSubject<IUser>;
+  public currentUser: Observable<IUser>;
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser') as string));
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.currentUserSubject = new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('currentUser') as string));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): User {
+  public get currentUserValue(): IUser {
     return this.currentUserSubject.value;
   }
 
@@ -59,4 +62,10 @@ export class RequestsService {
   getDataService(token: any): Observable<any> {
     return this.http.get<any>(RequestsService.URL_PROFILE);
   }
+
+//  TODO: change get users logic and get messages logic.
+/*  getUsers(): Observable<IUser> {
+
+  }*/
 }
+
