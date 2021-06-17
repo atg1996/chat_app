@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, pipe} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {IUser} from '../../models/user.model';
-import { environment } from '../../environments/environment';
+import {IUser} from '../models/user.model';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -57,10 +57,6 @@ export class RequestsService {
         }),
         catchError(err => of(err.error.message))
       );
-  }
-
-  getDataService(token: any): Observable<any> {
-    return this.http.get<any>(RequestsService.URL_PROFILE);
   }
 
 //  TODO: change get users logic and get messages logic.

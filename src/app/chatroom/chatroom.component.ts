@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ChatNamesService} from '../services/chat-names.service';
+import {ChatNamesService} from '../../services/chat-names.service';
 import {FormControl} from '@angular/forms';
 import {FormBuilder, Validators} from '@angular/forms';
-import {RequestsService} from '../services/requests.service';
+import {RequestsService} from '../../services/requests.service';
 import {interval} from 'rxjs/internal/observable/interval';
 import {startWith, switchMap} from 'rxjs/operators';
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
-import { RequestsService } from '../services/requests.service';
-import { ChatNamesService } from '../services/chat-names.service';
+import { RequestsService } from '../../services/requests.service';
+import { ChatNamesService } from '../../services/chat-names.service';
 
 @Component({
   selector: 'app-login-page',
