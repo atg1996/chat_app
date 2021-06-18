@@ -68,7 +68,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.receiver = userId;
     this.messages = [];
     this.requests.getMessage(this.sender, this.receiver)
-      .subscribe(res => this.messages = res);
+      .subscribe(res => this.messages = res.reverse());
   }
 
   messageSent(): void {
