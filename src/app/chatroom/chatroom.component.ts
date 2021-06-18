@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChatNamesService} from '../../services/chat-names.service';
 import {FormControl} from '@angular/forms';
 import {FormBuilder, Validators} from '@angular/forms';
 import {RequestsService} from '../../services/requests.service';
-import {interval} from 'rxjs/internal/observable/interval';
-import {startWith, switchMap} from 'rxjs/operators';
+import {Socket} from 'ngx-socket-io';
+import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
 
 @Component({
   selector: 'app-chatroom',
@@ -13,7 +13,7 @@ import {startWith, switchMap} from 'rxjs/operators';
   styleUrls: ['./chatroom.component.css'],
 })
 
-export class ChatroomComponent implements OnInit {
+export class ChatroomComponent implements OnInit, OnDestroy {
   sendMessageForm = this.formBuilder.group({
     sentMessage: ['', Validators.required],
     receiver: [0, Validators.required],
@@ -31,6 +31,7 @@ export class ChatroomComponent implements OnInit {
   myMessage = new FormControl('');
 
   @ViewChild('inputElement') inputElement: ElementRef | undefined;
+  private socket: WrappedSocket | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,18 +48,19 @@ export class ChatroomComponent implements OnInit {
     this.currentUser = [];
     this.messages = [];
     this.currentUserSubject = this.requests.currentUserSubject;
-
   }
 
   ngOnInit(): void {
+    this.setSocketConnection();
     this.chatNames.sharedUsers.subscribe(users => this.users = users);
     this.chatNames.sharedMyInfo.subscribe(myInfo => this.sender = myInfo);
-    this.timeInterval = interval(3000)
-      .pipe(
-        startWith(0),
-        switchMap(() => this.requests.getMessage(this.sender, this.receiver))
-      )
-      .subscribe(res => this.messages = res);
+    this.requests.getMessage(this.sender, this.receiver).subscribe(res => {
+      this.messages = res;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.socket?.disconnect();
   }
 
 
@@ -70,13 +72,11 @@ export class ChatroomComponent implements OnInit {
   }
 
   messageSent(): void {
-    this.sendMessageForm.value.receiver = this.receiver; // send receiver id with request
-    this.sendMessageForm.value.sender = this.sender; // send sender id with request
     if (this.sendMessageForm?.valid) {
-      this.requests.sendMessage(this.sendMessageForm?.value).subscribe(result => {
-        this.requests.getMessage(this.sender, this.receiver)
-          .subscribe(res => this.messages = res);
-
+      this.socket?.emit('message sent', {
+        senderId: this.sender,
+        receiverId: this.receiver,
+        msg: this.sendMessageForm.getRawValue().sentMessage
       });
 
     }
@@ -85,13 +85,33 @@ export class ChatroomComponent implements OnInit {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.timeInterval.unsubscribe();
   }
 
   resetValue(): void {
     if (this.inputElement) {
       this.inputElement.nativeElement.value = '';
     }
+  }
+
+  private setSocketConnection(): void {
+    const currentUserId = JSON.parse(localStorage.getItem('currentUser') || '{}').user_id;
+    this.socket = new Socket({
+      url: '127.0.0.1:3000',
+      options: {
+        query: `userId=${currentUserId}`
+      }
+    });
+
+    this.socket.connect();
+
+    this.socket.on('new message', (data: any) => {
+      this.messages.push({
+        id: 99,
+        message: data.msg,
+        receiver_id: data.receiverId,
+        sender_id: data.senderId,
+      });
+    });
   }
 }
 
