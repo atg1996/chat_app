@@ -105,12 +105,13 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.socket.connect();
 
     this.socket.on('new message', (data: any) => {
-      this.messages.push({
-        id: 99,
-        message: data.msg,
-        receiver_id: data.receiverId,
-        sender_id: data.senderId,
-      });
+      if (data.success) {
+        this.messages.push({
+          message: data.msg,
+          receiver_id: data.receiverId,
+          sender_id: data.senderId,
+        });
+      }
     });
   }
 }
