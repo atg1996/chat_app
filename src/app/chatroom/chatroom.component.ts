@@ -97,14 +97,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadMoreMessages(user: IUser): void {
-/*    this.offset +=15;
-    this.receiver = user.id;
-    this.currentUser = user;
-    this.messages = [];
-    this.requests.getMessage(this.sender, this.receiver, this.offset).subscribe(res => {
-      this.messages = this.messages.concat(res).reverse();
-    });*/
+  loadMoreMessages(): void {
+
   }
 
   messageSent(): void {
