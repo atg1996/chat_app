@@ -7,6 +7,7 @@ import {RequestsService} from '../../services/requests.service';
 import {Socket} from 'ngx-socket-io';
 import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
 import {environment} from '../../environments/environment';
+import {IUser} from '../../models/user.model';
 
 @Component({
   selector: 'app-chatroom',
@@ -25,7 +26,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   senders: any;
   userId: number;
 
-  currentUser: any;
+  currentUser: IUser | undefined;
   currentUserSubject: any;
   messages: any[];
 
@@ -46,7 +47,6 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.sender = 0;
     this.senders = [];
 
-    this.currentUser = [];
     this.messages = [];
     this.currentUserSubject = this.requests.currentUserSubject;
   }
@@ -64,6 +64,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.requests.getUsers(this.userId).subscribe(res => {
       if (res.success) {
         this.users = res.users;
+        console.log(this.users);
       }
     });
   }
@@ -73,8 +74,9 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   }
 
 
-  loadMessages(userId: number): void {
-    this.receiver = userId;
+  loadMessages(user: IUser): void {
+    this.receiver = user.id;
+    this.currentUser = user;
     this.messages = [];
     this.requests.getMessage(this.sender, this.receiver).subscribe(res => {
       this.messages = res.reverse();

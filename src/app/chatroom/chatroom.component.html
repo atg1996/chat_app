@@ -14,15 +14,15 @@
 
           <div class="col-12 ">
             <ul *ngFor="let user of users" class="list-group" [class.selected-user]="user.id === receiver">
-              <button class="chats" (click)="loadMessages(user.id)">{{user.name}}</button>
+              <button class="chats" (click)="loadMessages(user)">{{user.name}}</button>
             </ul>
           </div>
 
         </div>
         <div #messagesContainer class="right-side col-8">
 
-          <div class="right-top col-12">
-            <h5 class="sender-name">{{ currentUser.name }}</h5>
+          <div class="right-top col-12" *ngIf="currentUser">
+            <h5 class="sender-name">{{ currentUser?.name }}</h5>
           </div>
 
           <div class="messaging-space row"></div>
