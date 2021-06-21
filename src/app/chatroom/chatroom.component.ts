@@ -17,21 +17,18 @@ import {environment} from '../../environments/environment';
 export class ChatroomComponent implements OnInit, OnDestroy {
   sendMessageForm = this.formBuilder.group({
     sentMessage: ['', Validators.required],
-    receiver: [0, Validators.required],
   });
 
   users: any[];
   receiver: number;
   sender: number;
   senders: any;
-  timeInterval: any;
+  userId: number;
 
   currentUser: any;
   currentUserSubject: any;
   messages: any[];
-  myMessage = new FormControl('');
 
-  @ViewChild('inputElement') inputElement: ElementRef | undefined;
   @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
 
@@ -41,6 +38,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     private requests: RequestsService,
     private formBuilder: FormBuilder,
   ) {
+
+    this.userId = JSON.parse(localStorage.getItem('currentUser') || '{}').user_id;
     // TODO: cleanup
     this.users = [];
     this.receiver = 0;
@@ -53,11 +52,19 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getUsers();
     this.setSocketConnection();
-    this.chatNames.sharedUsers.subscribe(users => this.users = users);
     this.chatNames.sharedMyInfo.subscribe(myInfo => this.sender = myInfo);
     this.requests.getMessage(this.sender, this.receiver).subscribe(res => {
       this.messages = res;
+    });
+  }
+
+  getUsers(): void {
+    this.requests.getUsers(this.userId).subscribe(res => {
+      if (res.success) {
+        this.users = res.users;
+      }
     });
   }
 
@@ -84,9 +91,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       this.socket?.emit('message sent', {
         senderId: this.sender,
         receiverId: this.receiver,
-        msg: this.sendMessageForm.getRawValue().sentMessage
+        msg: this.sendMessageForm.getRawValue().sentMessage,
       });
-
     }
   }
 
@@ -96,17 +102,14 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   }
 
   resetValue(): void {
-    if (this.inputElement) {
-      this.inputElement.nativeElement.value = '';
-    }
+    this.sendMessageForm.reset();
   }
 
   private setSocketConnection(): void {
-    const currentUserId = JSON.parse(localStorage.getItem('currentUser') || '{}').user_id;
     this.socket = new Socket({
       url: environment.main_url,
       options: {
-        query: `userId=${currentUserId}`
+        query: `userId=${this.userId}`
       }
     });
 

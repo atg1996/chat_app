@@ -16,6 +16,7 @@ export class RequestsService {
   private static readonly URL_MESSAGE = environment.main_url + '/message';
   private static readonly URL_MESSAGES = environment.main_url + '/messages';
   private static readonly URL_CHAT = environment.main_url + '/chatroom';
+  private static readonly URL_USERS = environment.main_url + '/users';
 
   public currentUserSubject: BehaviorSubject<IUser>;
   public currentUser: Observable<IUser>;
@@ -60,9 +61,8 @@ export class RequestsService {
       );
   }
 
-//  TODO: change get users logic and get messages logic.
-/*  getUsers(): Observable<IUser> {
-
-  }*/
+  getUsers(userId: number, limit: number = 10, offset: number = 0): Observable<{success: boolean, users: IUser[]}> {
+      return this.http.get<{success: boolean, users: IUser[]}>(RequestsService.URL_USERS + `?userId=${userId}&limit=${limit}&offset=${offset}`);
+  }
 }
 

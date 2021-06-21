@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {RequestsService} from '../../services/requests.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -25,7 +25,6 @@ export class RegisterPageComponent {
 
   registerFunction(): void {
     if (this.forma?.valid) {
-      console.log(this.forma?.value);
       this.requests.sendRegisterInfo(this.forma?.value).subscribe(res => {
         if (res.success) {
           this.router.navigateByUrl('/login');
