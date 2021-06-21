@@ -25,7 +25,9 @@ export class RegisterPageComponent {
 
   registerFunction(): void {
     if (this.forma?.valid) {
-      this.requests.sendRegisterInfo(this.forma?.value);
+      this.requests.sendRegisterInfo(this.forma?.value).subscribe(result => {
+        console.log(result);
+      });
     } else {
       alert('Please fill all fields ');
     }
