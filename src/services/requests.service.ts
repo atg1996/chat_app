@@ -43,6 +43,7 @@ export class RequestsService {
   }
 
   sendRegisterInfo(data: any): Observable<any> {
+    console.log(RequestsService.URL_REGISTER);
     return this.http.post<any>(RequestsService.URL_REGISTER, data);
   }
 

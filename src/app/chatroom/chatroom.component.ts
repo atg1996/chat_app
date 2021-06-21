@@ -6,6 +6,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {RequestsService} from '../../services/requests.service';
 import {Socket} from 'ngx-socket-io';
 import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-chatroom',
@@ -31,6 +32,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   myMessage = new FormControl('');
 
   @ViewChild('inputElement') inputElement: ElementRef | undefined;
+  @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
 
   constructor(
@@ -67,8 +69,14 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   loadMessages(userId: number): void {
     this.receiver = userId;
     this.messages = [];
-    this.requests.getMessage(this.sender, this.receiver)
-      .subscribe(res => this.messages = res.reverse());
+    this.requests.getMessage(this.sender, this.receiver).subscribe(res => {
+      this.messages = res.reverse();
+      setTimeout(() => {
+        this.messagesContainer?.nativeElement.scrollTo({
+          top: this.messagesContainer?.nativeElement.scrollHeight,
+        });
+      }, 0);
+    });
   }
 
   messageSent(): void {
@@ -96,7 +104,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   private setSocketConnection(): void {
     const currentUserId = JSON.parse(localStorage.getItem('currentUser') || '{}').user_id;
     this.socket = new Socket({
-      url: '127.0.0.1:3000',
+      url: environment.main_url,
       options: {
         query: `userId=${currentUserId}`
       }
@@ -111,6 +119,12 @@ export class ChatroomComponent implements OnInit, OnDestroy {
           receiver_id: data.receiverId,
           sender_id: data.senderId,
         });
+        setTimeout(() => {
+          this.messagesContainer?.nativeElement.scrollTo({
+            top: this.messagesContainer?.nativeElement.scrollHeight,
+            behavior: 'smooth'
+          });
+        }, 0);
       }
     });
   }

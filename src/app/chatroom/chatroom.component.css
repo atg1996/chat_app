@@ -135,6 +135,10 @@ h3 {
   text-align: center;
 }
 
+.list-group.selected-user .chats {
+  background-color: #cae2e5;
+}
+
 .chats:focus {
   background-color: #cae2e5;
 }

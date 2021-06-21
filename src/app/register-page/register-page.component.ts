@@ -25,11 +25,15 @@ export class RegisterPageComponent {
 
   registerFunction(): void {
     if (this.forma?.valid) {
-      this.requests.sendRegisterInfo(this.forma?.value);
+      console.log(this.forma?.value);
+      this.requests.sendRegisterInfo(this.forma?.value).subscribe(res => {
+        if (res.success) {
+          this.router.navigateByUrl('/login');
+        }
+      });
     } else {
       alert('Please fill all fields ');
     }
-    this.router.navigateByUrl('/login');
   }
 
 }
