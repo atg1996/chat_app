@@ -17,6 +17,7 @@ export class RequestsService {
   private static readonly URL_MESSAGES = environment.main_url + '/messages';
   private static readonly URL_CHAT = environment.main_url + '/chatroom';
   private static readonly URL_USERS = environment.main_url + '/users';
+  private static readonly URL_MOREUSERS = environment.main_url + '/moreUsers';
 
   public currentUserSubject: BehaviorSubject<IUser>;
   public currentUser: Observable<IUser>;
@@ -44,7 +45,6 @@ export class RequestsService {
   }
 
   sendRegisterInfo(data: any): Observable<any> {
-    console.log(RequestsService.URL_REGISTER);
     return this.http.post<any>(RequestsService.URL_REGISTER, data);
   }
 
@@ -61,7 +61,7 @@ export class RequestsService {
       );
   }
 
-  getUsers(userId: number, limit: number = 10, offset: number = 0): Observable<{success: boolean, users: IUser[]}> {
+  getUsers(userId: number, offset: number = 0, limit: number = 10): Observable<{success: boolean, users: IUser[]}> {
       return this.http.get<{success: boolean, users: IUser[]}>(RequestsService.URL_USERS + `?userId=${userId}&limit=${limit}&offset=${offset}`);
   }
 }

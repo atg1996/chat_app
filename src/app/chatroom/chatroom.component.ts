@@ -32,6 +32,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
   @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
+  private offset = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,7 +65,15 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.requests.getUsers(this.userId).subscribe(res => {
       if (res.success) {
         this.users = res.users;
-        console.log(this.users);
+      }
+    });
+  }
+
+  loadMoreUsers(): void {
+    this.offset += 10;
+    this.requests.getUsers(this.userId, this.offset).subscribe(res => {
+      if (res.success) {
+        this.users = this.users.concat(res.users);
       }
     });
   }
@@ -86,6 +95,16 @@ export class ChatroomComponent implements OnInit, OnDestroy {
         });
       }, 0);
     });
+  }
+
+  loadMoreMessages(user: IUser): void {
+/*    this.offset +=15;
+    this.receiver = user.id;
+    this.currentUser = user;
+    this.messages = [];
+    this.requests.getMessage(this.sender, this.receiver, this.offset).subscribe(res => {
+      this.messages = this.messages.concat(res).reverse();
+    });*/
   }
 
   messageSent(): void {

@@ -16,6 +16,9 @@
             <ul *ngFor="let user of users" class="list-group" [class.selected-user]="user.id === receiver">
               <button class="chats" (click)="loadMessages(user)">{{user.name}}</button>
             </ul>
+            <ul>
+              <button class="load_more" (click)="loadMoreUsers()">more users.</button>
+            </ul>
           </div>
 
         </div>
@@ -23,6 +26,7 @@
 
           <div class="right-top col-12" *ngIf="currentUser">
             <h5 class="sender-name">{{ currentUser?.name }}</h5>
+            <button>load more</button>
           </div>
 
           <div class="messaging-space row"></div>
