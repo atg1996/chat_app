@@ -5,6 +5,8 @@ import {catchError, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {IUser} from '../models/user.model';
 import { environment } from '../environments/environment';
+import {IRegisterInfo} from '../models/IRegisterInfo';
+import {ILoginInfo } from '../models/ILoginInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -34,21 +36,17 @@ export class RequestsService {
     return this.currentUserSubject.value;
   }
 
-  sendMessage(data: any): Observable<any> {
-    return this.http.post<any>(RequestsService.URL_MESSAGE, data);
-  }
-
-  getMessage(sender: number, receiver: number): Observable<any> {
-    const data = {sender, receiver};
+  getMessage(sender: number, receiver: number, offset: number = 0, limit: number = 10 ): Observable<any> {
+    const data = {sender, receiver, offset, limit};
     return this.http.post<any>(RequestsService.URL_MESSAGES, data);
 
   }
 
-  sendRegisterInfo(data: any): Observable<any> {
+  sendRegisterInfo(data: IRegisterInfo): Observable<IRegisterInfo> {
     return this.http.post<any>(RequestsService.URL_REGISTER, data);
   }
 
-  loginService(loginData: any): Observable<any> {
+  loginService(loginData: ILoginInfo): Observable<ILoginInfo> {
     const resp = this.http.post<any>(RequestsService.URL_LOGIN, loginData);
     return resp
       .pipe(

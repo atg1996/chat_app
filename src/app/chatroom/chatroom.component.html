@@ -23,10 +23,9 @@
 
         </div>
         <div #messagesContainer class="right-side col-8">
-
           <div class="right-top col-12" *ngIf="currentUser">
-            <h5 class="sender-name">{{ currentUser?.name }}</h5>
-            <button>load more</button>
+            <h5 class="sender-name col-8">{{ currentUser?.name }}</h5>
+            <button class="load_more_messages col-4" (click)="loadMoreMessages(currentUser)">load more</button>
           </div>
 
           <div class="messaging-space row"></div>

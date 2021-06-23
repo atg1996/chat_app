@@ -153,14 +153,13 @@ h3 {
 
 .sent-message {
   background-color: #f59999;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 1px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px 10px 1px 10px;
   padding: 5px 30px;
   margin-top: 15px;
   margin-bottom: 15px;
   margin-left: 100%;
+  word-wrap: break-word;
+  text-align: right;
 }
 
 .accepted-message {
@@ -168,6 +167,8 @@ h3 {
   border-radius: 10px 10px 10px 1px;
   padding: 5px 30px;
   margin-top: 15px;
+  word-wrap: break-word;
+  text-align: left;
 }
 
 .logout {
@@ -204,3 +205,14 @@ h3 {
   color: grey;
 }
 
+.load_more_messages {
+  margin: 5px;
+  border:gray 1px solid;
+  border-radius: 5px;
+  font-size: 12px;
+  top: 50%;
+  align-items: center;
+  justify-content: center;
+  color: grey;
+  width: 150px;
+}

@@ -1,13 +1,13 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChatNamesService} from '../../services/chat-names.service';
-import {FormControl} from '@angular/forms';
 import {FormBuilder, Validators} from '@angular/forms';
 import {RequestsService} from '../../services/requests.service';
 import {Socket} from 'ngx-socket-io';
 import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
 import {environment} from '../../environments/environment';
 import {IUser} from '../../models/user.model';
+import {IMessage } from '../../models/message.model';
 
 @Component({
   selector: 'app-chatroom',
@@ -20,7 +20,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     sentMessage: ['', Validators.required],
   });
 
-  users: any[];
+  users: IUser[];
   receiver: number;
   sender: number;
   senders: any;
@@ -28,7 +28,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
   currentUser: IUser | undefined;
   currentUserSubject: any;
-  messages: any[];
+  messages: IMessage[];
 
   @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
@@ -97,9 +97,17 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadMoreMessages(): void {
-
+  loadMoreMessages(user: IUser, ): void {
+    this.offset += 10;
+    this.receiver = user.id;
+    this.currentUser = user;
+    this.requests.getMessage(this.sender, this.receiver, this.offset).subscribe(res => {
+      if (res.length) {
+        this.messages = res.concat(this.messages);
+      }
+    });
   }
+
 
   messageSent(): void {
     if (this.sendMessageForm?.valid) {

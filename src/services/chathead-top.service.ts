@@ -9,9 +9,4 @@ export class ChatheadTopService {
   constructor(private chatNames: ChatNamesService) {
 
   }
-
-/*  getName() {
-    const field = this.chatNames.getNames();
-  }*/
-
 }

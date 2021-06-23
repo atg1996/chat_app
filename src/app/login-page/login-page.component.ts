@@ -35,9 +35,7 @@ export class LoginPageComponent implements OnInit {
   loginSent(): void {
         if (this.loginInfo?.valid) {
           this.requests.loginService(this.loginInfo?.value).subscribe((result) => {
-            // TODO: navigate while success and show error message if success is false
             if (result.success) {
-              /*this.chatNames.setUsers(result.usernames);*/
               this.chatNames.userInfo(result.user_id);
             }
             this.router.navigateByUrl('chatroom');
