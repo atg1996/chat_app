@@ -36,7 +36,7 @@ export class RequestsService {
     return this.currentUserSubject.value;
   }
 
-  getMessage(sender: number, receiver: number, offset: number = 0, limit: number = 10 ): Observable<any> {
+  getMessage(sender: number, receiver: number, offset: number = 0, limit: number = 15 ): Observable<any> {
     const data = {sender, receiver, offset, limit};
     return this.http.post<any>(RequestsService.URL_MESSAGES, data);
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChatNamesService} from '../../services/chat-names.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -8,6 +8,7 @@ import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
 import {environment} from '../../environments/environment';
 import {IUser} from '../../models/user.model';
 import {IMessage } from '../../models/message.model';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-chatroom',
@@ -33,6 +34,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
   private offset = 0;
+  private limit = 0;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -70,8 +73,9 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   }
 
   loadMoreUsers(): void {
-    this.offset += 10;
-    this.requests.getUsers(this.userId, this.offset).subscribe(res => {
+    this.offset += 15;
+    this.limit = 15;
+    this.requests.getUsers(this.userId, this.offset, this.limit).subscribe(res => {
       if (res.success) {
         this.users = this.users.concat(res.users);
       }
@@ -97,13 +101,14 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadMoreMessages(user: IUser, ): void {
-    this.offset += 10;
+  loadMoreMessages(user: any ): void {
+    this.offset += 15;
+    this.limit = 15;
     this.receiver = user.id;
     this.currentUser = user;
-    this.requests.getMessage(this.sender, this.receiver, this.offset).subscribe(res => {
+    this.requests.getMessage(this.sender, this.receiver, this.offset, this.limit).subscribe(res => {
       if (res.length) {
-        this.messages = res.concat(this.messages);
+        this.messages = res.reverse().concat(this.messages);
       }
     });
   }
@@ -153,6 +158,14 @@ export class ChatroomComponent implements OnInit, OnDestroy {
         }, 0);
       }
     });
+  }
+
+  onScroll($event: Event): void {
+    if (this.messagesContainer?.nativeElement.scrollTop === 0) {
+      setTimeout(() => {
+      this.loadMoreMessages(this.currentUser);
+      }, 500);
+    }
   }
 }
 
