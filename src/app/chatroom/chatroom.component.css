@@ -138,6 +138,30 @@ h3 {
   align-content: center;
   flex-direction: column;
   text-align: center;
+  float: left;
+  position: relative;
+}
+
+.list_group_wrapper {
+}
+
+
+.activity_dot {
+  background-color: #EC7063;
+  height: 10px;
+  width: 10px;
+  float: right;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+.activity_dot.online {
+  background-color: #7DCEA0;
+  height: 10px;
+  width: 10px;
+  float: right;
+  border-radius: 50%;
+  margin-left: auto;
 }
 
 .list-group.selected-user .chats {
@@ -205,4 +229,5 @@ h3 {
   justify-content: center;
   color: grey;
 }
+
 

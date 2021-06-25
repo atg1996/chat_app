@@ -12,9 +12,12 @@
 
         <div class="left-side col-4">
 
-          <div class="col-12 ">
+          <div class="col-12 list_group_wrapper ">
             <ul *ngFor="let user of users" class="list-group" [class.selected-user]="user.id === receiver">
-              <button class="chats" (click)="loadMessages(user)">{{user.name}}</button>
+              <button class="chats col-12" (click)="loadMessages(user)">{{user.name}}
+                <div class="activity_dot"  [class.online]="allActiveUsers.includes(user.id)"></div>
+              </button>
+
             </ul>
             <ul>
               <button class="load_more" (click)="loadMoreUsers()">more users.</button>
@@ -25,7 +28,6 @@
         <div #messagesContainer class="right-side col-8" (scroll)="onScroll($event)">
           <div class="right-top col-12" *ngIf="currentUser">
             <h5 class="sender-name col-12">{{ currentUser?.name }}</h5>
-            <!--<button class="load_more_messages col-4" (click)="loadMoreMessages(currentUser)">load more</button>-->
           </div>
 
           <ng-container *ngFor="let message of messages" >

@@ -8,7 +8,7 @@ import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
 import {environment} from '../../environments/environment';
 import {IUser} from '../../models/user.model';
 import {IMessage } from '../../models/message.model';
-import {of} from 'rxjs';
+import {subscribeOn} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chatroom',
@@ -26,6 +26,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   sender: number;
   senders: any;
   userId: number;
+  allActiveUsers: number[];
 
   currentUser: IUser | undefined;
   currentUserSubject: any;
@@ -50,6 +51,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.receiver = 0;
     this.sender = 0;
     this.senders = [];
+    this.allActiveUsers = [];
 
     this.messages = [];
     this.currentUserSubject = this.requests.currentUserSubject;
@@ -62,6 +64,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.requests.getMessage(this.sender, this.receiver).subscribe(res => {
       this.messages = res;
     });
+    this.getOnlineUsers();
   }
 
   getUsers(): void {
@@ -78,6 +81,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.requests.getUsers(this.userId, this.offset, this.limit).subscribe(res => {
       if (res.success) {
         this.users = this.users.concat(res.users);
+
       }
     });
   }
@@ -166,6 +170,16 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       this.loadMoreMessages(this.currentUser);
       }, 500);
     }
+  }
+
+  getOnlineUsers(): any {
+      this.socket?.on('online users', (arg: { allUsers: string[] }) => {
+        console.log(arg);
+        this.allActiveUsers = arg.allUsers.map(value => +value);
+        console.log(this.allActiveUsers);
+
+
+      });
   }
 }
 
