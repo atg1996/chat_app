@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChatNamesService} from '../../services/chat-names.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -7,8 +7,7 @@ import {Socket} from 'ngx-socket-io';
 import {WrappedSocket} from 'ngx-socket-io/src/socket-io.service';
 import {environment} from '../../environments/environment';
 import {IUser} from '../../models/user.model';
-import {IMessage } from '../../models/message.model';
-import {subscribeOn} from 'rxjs/operators';
+import {IMessage} from '../../models/message.model';
 
 @Component({
   selector: 'app-chatroom',
@@ -27,7 +26,6 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   senders: any;
   userId: number;
   allActiveUsers: number[];
-
   currentUser: IUser | undefined;
   currentUserSubject: any;
   messages: IMessage[];
@@ -46,7 +44,6 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   ) {
 
     this.userId = JSON.parse(localStorage.getItem('currentUser') || '{}').user_id;
-    // TODO: cleanup
     this.users = [];
     this.receiver = 0;
     this.sender = 0;
@@ -105,7 +102,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadMoreMessages(user: any ): void {
+  loadMoreMessages(user: any): void {
     this.offset += 15;
     this.limit = 15;
     this.receiver = user.id;
@@ -148,7 +145,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.socket.connect();
 
     this.socket.on('new message', (data: any) => {
-      if (data.success) {
+
+      if (this.receiver === data.receiverId || this.receiver === data.senderId) {
         this.messages.push({
           message: data.msg,
           receiver_id: data.receiverId,
@@ -167,19 +165,16 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   onScroll($event: Event): void {
     if (this.messagesContainer?.nativeElement.scrollTop === 0) {
       setTimeout(() => {
-      this.loadMoreMessages(this.currentUser);
+        this.loadMoreMessages(this.currentUser);
       }, 500);
     }
   }
 
   getOnlineUsers(): any {
-      this.socket?.on('online users', (arg: { allUsers: string[] }) => {
-        console.log(arg);
-        this.allActiveUsers = arg.allUsers.map(value => +value);
-        console.log(this.allActiveUsers);
+    this.socket?.on('online users', (arg: { allUsers: string[] }) => {
+      this.allActiveUsers = arg.allUsers.map(value => +value);
+    });
 
-
-      });
   }
-}
 
+}
