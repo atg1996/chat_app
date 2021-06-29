@@ -14,8 +14,10 @@
 
           <div class="col-12 list_group_wrapper ">
             <ul *ngFor="let user of users" class="list-group" [class.selected-user]="user.id === receiver">
-              <button class="chats col-12" (click)="loadMessages(user)">{{user.name}}
-                <div class="activity_dot"  [class.online]="allActiveUsers.includes(user.id)"></div>
+              <button class="chats col-12" (click)="loadMessages(user)"
+                      [class.new_message]="unreadMessageSender.includes(user.id)"
+                      [class.online]="allActiveUsers.includes(user.id)"
+                      >{{user.name}}
               </button>
 
             </ul>

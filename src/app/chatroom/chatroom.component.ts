@@ -29,6 +29,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   currentUser: IUser | undefined;
   currentUserSubject: any;
   messages: IMessage[];
+  unreadMessageSender: number [];
 
   @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
@@ -49,6 +50,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.sender = 0;
     this.senders = [];
     this.allActiveUsers = [];
+    this.unreadMessageSender = [];
 
     this.messages = [];
     this.currentUserSubject = this.requests.currentUserSubject;
@@ -61,7 +63,6 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.requests.getMessage(this.sender, this.receiver).subscribe(res => {
       this.messages = res;
     });
-    this.getOnlineUsers();
   }
 
   getUsers(): void {
@@ -89,6 +90,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
 
   loadMessages(user: IUser): void {
+    const index = this.unreadMessageSender.indexOf(this.sender);
+    this.unreadMessageSender.splice(index, 1);
     this.receiver = user.id;
     this.currentUser = user;
     this.messages = [];
@@ -134,7 +137,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.sendMessageForm.reset();
   }
 
-  private setSocketConnection(): void {
+  private  setSocketConnection(): void {
     this.socket = new Socket({
       url: environment.main_url,
       options: {
@@ -144,22 +147,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
     this.socket.connect();
 
-    this.socket.on('new message', (data: any) => {
-
-      if (this.receiver === data.receiverId || this.receiver === data.senderId) {
-        this.messages.push({
-          message: data.msg,
-          receiver_id: data.receiverId,
-          sender_id: data.senderId,
-        });
-        setTimeout(() => {
-          this.messagesContainer?.nativeElement.scrollTo({
-            top: this.messagesContainer?.nativeElement.scrollHeight,
-            behavior: 'smooth'
-          });
-        }, 0);
-      }
-    });
+    this.listenNewMessages();
+    this.getOnlineUsers();
   }
 
   onScroll($event: Event): void {
@@ -175,6 +164,34 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       this.allActiveUsers = arg.allUsers.map(value => +value);
     });
 
+    this.socket?.on('user connected', (arg: {userId: string}) => {
+      this.allActiveUsers.push(+arg.userId);
+    });
+    this.socket?.on('user disconnected', (arg: {userId: string}) => {
+      const index = this.allActiveUsers.indexOf(+arg.userId);
+      this.allActiveUsers.splice(index, 1);
+    });
   }
 
+  private listenNewMessages(): void {
+    this.socket?.on('new message', (data: any) => {
+
+      if (this.receiver === data.receiverId || this.receiver === data.senderId) {
+        this.messages.push({
+          message: data.msg,
+          receiver_id: data.receiverId,
+          sender_id: data.senderId,
+        });
+        setTimeout(() => {
+          this.messagesContainer?.nativeElement.scrollTo({
+            top: this.messagesContainer?.nativeElement.scrollHeight,
+            behavior: 'smooth'
+          });
+        }, 0);
+      }
+      if (data.success && this.receiver !== data.receiverId) {
+        this.unreadMessageSender.push(data.senderId);
+      }
+    });
+  }
 }

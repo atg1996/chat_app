@@ -144,28 +144,74 @@ h3 {
   position: relative;
 }
 
-.list_group_wrapper {
+
+
+.chats.online {
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  color: grey;
+  height: 40px;
+  background-color: #D4EFDF;
+  border:none ;
+  border-bottom:1px #c9c9c9 solid;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+  float: left;
+  position: relative;
+}
+
+.chats.new_message  {
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  color: grey;
+  height: 40px;
+  background-color: #FFD2D2;
+  border:none ;
+  border-bottom:1px #c9c9c9 solid;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
+  float: left;
+  position: relative;
 }
 
 
-.activity_dot {
+
+/*.activity_dot {
   background-color: white;
   border: solid 1px #CCD1D1;
-  height: 5px;
-  width: 5px;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  position: absolute;
+  left: 95%;
+}*/
+
+/*
+.activity_dot.online {
+  background-color: #7DCEA0;
+  height: 7px;
+  width: 7px;
   border-radius: 50%;
   position: absolute;
   left: 95%;
 }
 
-.activity_dot.online {
-  background-color: #7DCEA0;
-  height: 5px;
-  width: 5px;
+.activity_dot.new_message {
+  background-color: #F1948A;
+  border: solid 1px #666464;
+  height: 7px;
+  width: 7px;
   border-radius: 50%;
   position: absolute;
   left: 95%;
 }
+*/
 
 .list-group.selected-user .chats {
   background-color: #EBF8FF;
