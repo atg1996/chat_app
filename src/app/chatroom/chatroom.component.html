@@ -51,7 +51,7 @@
           <form [formGroup]="sendMessageForm" (submit)="messageSent(); resetValue()">
 
             <div class="message-input-div col-10">
-              <input type="text"  formControlName="sentMessage" class="message-input" placeholder="Aa">
+              <input type="text"  formControlName="sentMessage" (keydown)="typingListener()" class="message-input" placeholder="Aa">
             </div>
 
             <div class="send-button-div col-2">

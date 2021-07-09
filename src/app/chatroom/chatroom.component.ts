@@ -30,6 +30,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   currentUserSubject: any;
   messages: IMessage[];
   unreadMessageSender: number [];
+  typingUser: number[];
 
   @ViewChild('messagesContainer') messagesContainer: ElementRef | undefined;
   private socket: WrappedSocket | undefined;
@@ -51,6 +52,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     this.senders = [];
     this.allActiveUsers = [];
     this.unreadMessageSender = [];
+    this.typingUser = [];
 
     this.messages = [];
     this.currentUserSubject = this.requests.currentUserSubject;
@@ -147,6 +149,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
     this.socket.connect();
 
+    this.typingListener();
     this.listenNewMessages();
     this.getOnlineUsers();
   }
@@ -155,7 +158,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
     if (this.messagesContainer?.nativeElement.scrollTop === 0) {
       setTimeout(() => {
         this.loadMoreMessages(this.currentUser);
-      }, 500);
+      }, 1000);
     }
   }
 
@@ -194,4 +197,13 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  typingListener(): any {
+    this.socket?.on('typing', ( data: any) => {
+      if (this.receiver !== data.senderId) {
+        console.log('Someone typing');
+      }
+    });
+  }
 }
+
